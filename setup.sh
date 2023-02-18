@@ -9,26 +9,26 @@ read -r hostname
 echo "What is your timezone? (It will be defaulted to Europe/Istanbul if none given):"
 read -r timezone
 
-while true; do
-    read -s -p "Enter new sudo password: " sudopass
-    echo
-    read -s -p "Confirm new sudo password: " sudopass2
-    echo
-    if [ "$sudopass" = "" ]; then
-        echo "Password cannot be empty. Please try again."
-    elif [ "$sudopass" != "$sudopass2" ]; then
-        echo "Passwords do not match. Please try again."
-    else
-        sudo sh -c "echo "root:$sudopass" | chpasswd"
-        echo "Sudo password updated successfully."
-        break
-    fi
-done
+# while true; do
+#     read -s -p "Enter new sudo password: " sudopass
+#     echo
+#     read -s -p "Confirm new sudo password: " sudopass2
+#     echo
+#     if [ "$sudopass" = "" ]; then
+#         echo "Password cannot be empty. Please try again."
+#     elif [ "$sudopass" != "$sudopass2" ]; then
+#         echo "Passwords do not match. Please try again."
+#     else
+#         sudo sh -c "echo "root:$sudopass" | chpasswd"
+#         echo "Sudo password updated successfully."
+#         break
+#     fi
+# done
 
-sudo sed -i '34s/.*/PermitRootLogin without-password/' /etc/ssh/sshd_config
+# sudo sed -i '34s/.*/PermitRootLogin without-password/' /etc/ssh/sshd_config
 
-sudo sed -i 's|["'\'']||g' /root/.ssh/authorized_keys
-sudo sed -i 's/no-port-forwarding,no-agent-forwarding,no-X11-forwarding,.*exit 142 //g' /root/.ssh/authorized_keys
+# sudo sed -i 's|["'\'']||g' /root/.ssh/authorized_keys
+# sudo sed -i 's/no-port-forwarding,no-agent-forwarding,no-X11-forwarding,.*exit 142 //g' /root/.ssh/authorized_keys
 
 sudo sh -c "apt-get update && apt-get upgrade && apt-get dist-upgrade -y"
 
